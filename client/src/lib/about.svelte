@@ -80,13 +80,13 @@
 
     <!-- Education card -->
     <FadeIn delay={100}>
-    <div class="flex flex-row justify-center  flex-wrap">
+    <div class="flex flex-row justify-center  flex-wrap ">
       <div class="gap-4">
         {#each education as edu}
-          <div class="relative rounded-2xl border border-white/[0.15] bg-white/[0.03] p-8 flex flex-col gap-6
+          <div class="relative rounded-2xl border border-white/[0.15] bg-white/[0.03] p-3 sm:p-8 flex flex-col gap-6
                        transition-all duration-300 hover:border-blue-400 hover:shadow-xl  hover:translate-y-2 cursor-pointer
                        backglow 
-                       min-h-70  w-full max-w-120 ">
+                       min-h-70  w-full max-w-120 m-2 ">
 
             <!-- Header -->
             <div class="flex items-center gap-5">
@@ -105,7 +105,7 @@
                 <span class="inline-flex items-center gap-2 text-[0.7rem] tracking-[0.1em] uppercase
                              text-blue-400 bg-blue-400/[0.1] outline outline-1 outline-blue-400/[0.5]
                              px-3 py-1 rounded-full w-fit ml-auto">
-                  <span class="w-[6px] h-[6px] rounded-full bg-blue-400"></span>
+                  <span class="w-[6px] h-[6px] rounded-full bg-blue-400 hidden sm:block"></span>
                   Current
                 </span>
               {/if}

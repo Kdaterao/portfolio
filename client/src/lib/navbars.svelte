@@ -25,7 +25,7 @@
 
  <svelte:window bind:scrollY={y}/>
 
-<div class="fixed top-6 left-0 right-0 z-50 flex justify-center"
+<div class=" hidden sm:block fixed top-6 left-0 right-0 z-50 sm:flex justify-center"
     class:pointer-events-auto={y > threshold}
     class:pointer-events-none={y <= threshold}>
   <nav class="transition-all transform duration-700 ease-out
@@ -37,11 +37,11 @@
      class:pointer-events-none={y <= threshold}
      class:translate-y-0={y > threshold}
      class:-translate-y-4={y <= threshold}>
-    <button onclick={() => scroll("hero")} class="cursor-pointer mr-auto">
-      <span class="text-lg tracking font-bold text-white">KD</span>
+    <button onclick={() => scroll("hero")} class=" cursor-pointer mr-auto">
+      <span class="text-lg tracking font-bold text-white ">KD</span>
     </button>
 
-    <ul class="flex invisible sm:block md:gap-3 lg:gap-6 list-none m-0 p-0  ">
+    <ul class="flex md:gap-3 lg:gap-6 list-none m-0 p-0  ">
       {#each links as { label, section }}
         <li>
           <button
@@ -60,7 +60,7 @@
       Resume
     </a>
     <a href={github} target="_blank" rel="noopener"
-       class="text-[0.75rem] tracking-[0.06em] uppercase text-[#f0efe9]
+       class=" text-[0.75rem] tracking-[0.06em] uppercase text-[#f0efe9]
               border border-white/25 px-4 py-[0.4rem] rounded-full no-underline
               transition-all duration-200 hover:bg-white/[0.08] hover:border-white/45">
       GitHub

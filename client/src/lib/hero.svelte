@@ -103,9 +103,9 @@
 <div class="relative w-screen h-screen mb-10" id="hero">
  
   <!-- 3D canvas -->
-  
-  <canvas bind:this={canvasEl} class="relative w-full h-full z-[0]" id="canvas3d"></canvas>
- 
+  <div class="w-full  h-fulloverflow-hidden">
+  <canvas bind:this={canvasEl} class="absolute left-1/2 -translate-x-1/2 w-[1200px] h-full pointer-events-none sm:pointer-events-auto" id="canvas3d"></canvas>
+    </div>
 
   <!-- Hero content -->
   <div class="absolute z-[1] top-1/2 left-12 -translate-y-1/2 max-w-[580px]

@@ -13,8 +13,8 @@
     const handleWheel = (e: WheelEvent) => {
 
       const isMD = window.innerWidth >= 768; // md breakpoint
-
-      if (container && !isMD) {
+      const isM = window.innerWidth <= 550; // sm breakpoint
+      if (container && !isMD && !isM) {
         container.scrollLeft += e.deltaY;
         e.preventDefault(); 
       }
@@ -95,7 +95,7 @@
     
     <!-- Where auto scroll area -->
     <div  on:wheel|nonpassive={handleWheel} 
-    class="block md:invisible absolute z-12  justify-center  mt-12 w-full h-2/4">
+    class="block md:hidden absolute z-12  justify-center  mt-12 w-full h-2/4 outline-2 outline-red-900">
     </div>
    
    <!-- Cards -->
