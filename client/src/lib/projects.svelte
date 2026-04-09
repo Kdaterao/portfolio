@@ -5,8 +5,22 @@
   import { fetchProjects, getImageUrl, type Project } from "./api";
 
   let projects: Project[] = [];
-  let loading = true;
 
+  //----- allow focus on scroll element automatically ------
+  let loading = true;
+  
+    let container: HTMLDivElement;
+    const handleWheel = (e: WheelEvent) => {
+
+      const isMD = window.innerWidth >= 768; // md breakpoint
+
+      if (container && !isMD) {
+        container.scrollLeft += e.deltaY;
+        e.preventDefault(); 
+      }
+    };
+
+  //------ get data -----
   onMount(async () => {
     try {
       const fetchedProjects = await fetchProjects();
@@ -27,9 +41,11 @@
     } finally {
       loading = false;
     }
+
+
   });
 
-  //----- filter -----
+  //----- filter (tabs) -----
   $: features = projects.filter((p) => p.featured); //list of featured cards
   $: rest = projects.filter((p) => !p.featured); // the rest..
 
@@ -54,7 +70,7 @@
     <div class="flex flex-col flex-wrap items-center mb-12">
         <p class="text-sm uppercase tracking-widest text-gray-400 mb-2">What I've Built</p>
         <h1 class="text-white text-[3.3rem] md:text-[4.0rem] font-bold flex  ">Featured Projects</h1>
-        <div class="mt-4 h-1 w-16 bg-blue-500 rounded-full"></div>
+
     </div>
   </FadeIn>
 
@@ -76,10 +92,22 @@
         </button>
       {/each}
     </div>
-
-    <!-- Cards -->
-    <div class="flex flex-row justify-start md:justify-center gap-6 overflow-x-auto pb-4
-                md:flex-wrap">
+    
+    <!-- Where auto scroll area -->
+    <div  on:wheel|nonpassive={handleWheel} 
+    class="block md:invisible absolute z-12  justify-center  mt-12 w-full h-2/4">
+    </div>
+   
+   <!-- Cards -->
+    <div
+      bind:this={container}
+      class="flex flex-row  justify-start md:justify-center gap-6
+            overflow-x-auto md:flex-wrap
+            [&::-webkit-scrollbar]:w-2
+            [&::-webkit-scrollbar-thumb]:border
+            [&::-webkit-scrollbar-thumb]:border-white/5
+            [&::-webkit-scrollbar-thumb]:bg-neutral-950
+            [&::-webkit-scrollbar-thumb]:rounded-full">
       {#each filtered as project (project.title)}
       <SlideIn>
      <div

@@ -1,7 +1,6 @@
 // API utilities for connecting to the backend server
-const API_BASE = "http://localhost:3000/mongo";
-const API_R2 = "http://localhost:3000/r2";
-
+const API_BASE = import.meta.env.VITE_MONGO_API_BASE;
+const API_R2 = import.meta.env.VITE_R2_API_BASE;
 // Types for our data
 export interface Project {
   textID: string;
