@@ -20,14 +20,14 @@
 
 
   <!-- Nav bar -->
-    <nav class="relative z-[10] flex items-center 
+    <nav class="relative z-[10] flex justify-center 
             justify-between 
             gap-4 px-4 sm:px-6 md:px-12 py-4
             border-b border-white/[0.07] backdrop-blur-sm">
  
       <span class="text-lg tracking font-bold text-white mr-auto cursor-pointer hidden sm:block">KD</span>
 
-    <ul class="flex  invisible sm:block sm:gap-3 lg:gap-8 list-none">
+    <ul class=" hidden sm:flex  sm:block gap-3 lg:gap-8 list-none mt-2">
       {#each links as { label, section}}
         <li>
           <button
@@ -38,6 +38,7 @@
         </li>
       {/each}
     </ul>
+
     <a href={resume} target="_blank" rel="noopener"
        class="text-[0.75rem] tracking-[0.06em] uppercase text-[#f0efe9]
               border border-white/25 px-4 py-[0.4rem] rounded-full no-underline
@@ -45,7 +46,7 @@
       Resume
     </a>
     <a href={github} target="_blank" rel="noopener"
-       class="text-[0.75rem] tracking-[0.06em] uppercase text-[#f0efe9]
+       class="hidden sm:block text-[0.75rem] tracking-[0.06em] uppercase text-[#f0efe9]
               border border-white/25 px-4 py-[0.4rem] rounded-full no-underline
               transition-all duration-200 hover:bg-white/[0.08] hover:border-white/45">
       GitHub
@@ -56,6 +57,7 @@
               transition-all duration-200 hover:bg-white/[0.08] hover:border-white/45">
       LinkedIn
     </a>
+
   </nav>
 
 
