@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+
+@layer components {
+  .backglow {
+    @apply  shadow-[0_0_100px_0] shadow-blue-400/[0.1];
+  }
+
+}
