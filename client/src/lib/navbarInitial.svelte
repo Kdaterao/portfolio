@@ -25,7 +25,7 @@
  
       <span class="text-lg tracking font-bold text-white mr-auto cursor-pointer">KD</span>
 
-    <ul class="flex gap-3 lg:gap-8 list-none">
+    <ul class="flex  invisible sm:block gap-3 lg:gap-8 list-none">
       {#each links as { label, section}}
         <li>
           <button

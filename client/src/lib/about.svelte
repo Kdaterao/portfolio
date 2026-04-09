@@ -65,7 +65,7 @@
       <SlideLoader delay={i*200}>
         <TiltCard>
           <div class="overflow-hidden rounded-2xl aspect-[4/5] bg-white/[0.03] border border-white/[0.08]
-                      w-50 h-70 md:w-60 md:h-80 lg:w-70 lg:h-90  hover:scale-105">
+                      w-full max-w-50 h-70 md:w-60 md:h-80 lg:w-70 lg:h-90  hover:scale-105">
             <img
               src={photo}
               alt="Photo {i + 1}"
@@ -86,7 +86,7 @@
           <div class="relative rounded-2xl border border-white/[0.15] bg-white/[0.03] p-8 flex flex-col gap-6
                        transition-all duration-300 hover:border-blue-400 hover:shadow-xl  hover:translate-y-2 cursor-pointer
                        backglow 
-                       min-h-70 w-120 ">
+                       min-h-70  w-full max-w-120 ">
 
             <!-- Header -->
             <div class="flex items-center gap-5">

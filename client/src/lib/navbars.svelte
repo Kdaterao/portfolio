@@ -41,7 +41,7 @@
       <span class="text-lg tracking font-bold text-white">KD</span>
     </button>
 
-    <ul class="flex md:gap-3 lg:gap-6 list-none m-0 p-0  ">
+    <ul class="flex invisible sm:block md:gap-3 lg:gap-6 list-none m-0 p-0  ">
       {#each links as { label, section }}
         <li>
           <button

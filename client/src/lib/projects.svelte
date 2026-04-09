@@ -115,7 +115,7 @@
             
             grid-cols  mb-16 rounded-2xl  border border-white/[0.50]
              
-            w-90 h-150 flex-col
+            w-full max-w-90 h-150 flex-col
             sm:w-100 sm:h-150 sm:flex-col
             md:min-w-160 md:h-120 md:flex-row
              
@@ -133,7 +133,7 @@
                       ">
         <img
             class="object-cover p-5  rounded-3xl border border-white/[0.1]
-                    w-70 h-full
+                    w-full max-w-70 h-full
                     sm:w-80 sm:h-full
                     md:w-full md:h-90 md:mb-10
                   "
