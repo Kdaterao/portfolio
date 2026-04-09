@@ -20,10 +20,12 @@
 
 
   <!-- Nav bar -->
-  <nav class="absolute top-0 left-0 right-0 z-[10] flex items-center gap-8 px-12 py-6
-              border-b border-white/[0.07] backdrop-blur-sm">
+    <nav class="relative z-[10] flex items-center 
+            justify-between 
+            gap-4 px-4 sm:px-6 md:px-12 py-4
+            border-b border-white/[0.07] backdrop-blur-sm">
  
-      <span class="text-lg tracking font-bold text-white mr-auto cursor-pointer">KD</span>
+      <span class="text-lg tracking font-bold text-white mr-auto cursor-pointer hidden sm:block">KD</span>
 
     <ul class="flex  invisible sm:block gap-3 lg:gap-8 list-none">
       {#each links as { label, section}}
