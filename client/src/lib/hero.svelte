@@ -103,7 +103,7 @@
 <div class="relative w-screen h-screen mb-10" id="hero">
  
   <!-- 3D canvas -->
-  <div class="w-full  h-fulloverflow-hidden">
+  <div class="w-full  h-full overflow-hidden">
   <canvas bind:this={canvasEl} class="absolute left-1/2 -translate-x-1/2 w-[1200px] h-full pointer-events-none sm:pointer-events-auto" id="canvas3d"></canvas>
     </div>
 
