@@ -53,8 +53,8 @@ var mongo = require('./routes/mongo');
 
 
 
-app.use('/r2', authenticate, r2);
-app.use('/mongo',authenticate, mongo);
+app.use('/api/r2', authenticate, r2);
+app.use('/api/mongo',authenticate, mongo);
 
 //----- catch 404 and forward to error handler if route not found -----
 app.use(function(req, res, next) {
