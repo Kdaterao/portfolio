@@ -14,6 +14,10 @@ const cors = require('cors');
 //----- create express(app) object -----
 var app = express();
 
+//------ port ------
+
+app.listen(4000);
+
 //------ view engine setup -----
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
