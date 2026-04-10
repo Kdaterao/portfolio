@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { fullText, eyebrowText, subHeadlineText, bio, linkedin, github, resume, tags } from "./configvariables";
+  import { type SiteConfig , fetchSiteConfig} from "./api"
+  import { onMount } from "svelte";
   let y: number;
   let threshold = 150;
 
@@ -10,16 +12,13 @@
   ];
 
 
-
-  const resume = "";
-  const linkedin = ""
-  const github = "";
-
   function scroll(section: string){
     const element = document.getElementById(section);
     element?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
     console.log("done!");
   }
+
+
 
 </script>
 
@@ -53,19 +52,19 @@
       {/each}
     </ul>
 
-    <a href={resume} target="_blank" rel="noopener"
+    <a href={$resume} target="_blank" rel="noopener"
        class="text-[0.75rem] tracking-[0.06em] uppercase text-[#f0efe9]
               border border-white/25 px-4 py-[0.4rem] rounded-full no-underline
               transition-all duration-200 hover:bg-white/[0.08] hover:border-white/45">
       Resume
     </a>
-    <a href={github} target="_blank" rel="noopener"
+    <a href={$github} target="_blank" rel="noopener"
        class=" text-[0.75rem] tracking-[0.06em] uppercase text-[#f0efe9]
               border border-white/25 px-4 py-[0.4rem] rounded-full no-underline
               transition-all duration-200 hover:bg-white/[0.08] hover:border-white/45">
       GitHub
     </a>
-    <a href={linkedin} target="_blank" rel="noopener"
+    <a href={$linkedin} target="_blank" rel="noopener"
        class="text-[0.75rem] tracking-[0.06em] uppercase text-[#f0efe9]
               border border-white/25 px-4 py-[0.4rem] rounded-full no-underline
               transition-all duration-200 hover:bg-white/[0.08] hover:border-white/45">

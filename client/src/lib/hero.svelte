@@ -1,21 +1,35 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Application } from "@splinetool/runtime";
-  import { fetchSiteConfig, type SiteConfig } from "./api";
+  import { fullText, eyebrowText, subHeadlineText, bio, linkedin, github, resume, tags } from "./configvariables";
+  import { type SiteConfig , fetchSiteConfig} from "./api"
 
+  let siteConfig: SiteConfig | null = null;
   let canvasEl: HTMLCanvasElement;
   let displayedText = "";
   let cursorVisible = true;
-  let loaded = false;
-  let siteConfig: SiteConfig | null = null;
 
-  let fullText = "Hi, I'm Krish";
-  let eyebrowText = "Computer Science · Math";
-  let subHeadlineText = "Passionate about solving hard problems";
-  let tags = ["😼", ":D"];
+
+    async function loadSiteConfig() {
+    try {
+      siteConfig = await fetchSiteConfig();
+      fullText.set(siteConfig?.fullText || "Hi, I'm Krish");
+      eyebrowText.set(siteConfig?.eyebrowText || "Computer Science · Math");
+      subHeadlineText.set(siteConfig?.subHeadlineText || "Passionate about solving hard problems");
+      bio.set(siteConfig?.bio|| "");
+      linkedin.set(siteConfig?.linkedin|| "");
+      github.set(siteConfig?.github|| "");
+      resume.set(siteConfig?.resume || "");
+      tags.set(typeof (siteConfig as any).tags === 'string' ? (siteConfig as any).tags.split(',').map((t: string) => t.trim()) : siteConfig.tags || []);
+    } catch (error) {
+      console.error("Error loading site config:", error);
+    }
+  }
+
+
 
   onMount(() => {
-    // Load site config asynchronously
+
     loadSiteConfig();
 
     //----- spline animation - load lazily -----
@@ -64,9 +78,9 @@
     let index = 0;
     const delay = setTimeout(() => {
       const interval = setInterval(() => {
-        displayedText += fullText[index];
+        displayedText += $fullText[index];
         index++;
-        if (index >= fullText.length) {
+        if (index >= $fullText.length) {
           clearInterval(interval);
         }
       }, 120); // Slightly slower for better performance
@@ -86,17 +100,8 @@
     };
   });
 
-  async function loadSiteConfig() {
-    try {
-      siteConfig = await fetchSiteConfig();
-      fullText = siteConfig?.fullText || "Hi, I'm Krish";
-      eyebrowText = siteConfig?.eyebrowText || "Computer Science · Math";
-      subHeadlineText = siteConfig?.subHeadlineText || "Passionate about solving hard problems";
-      tags = siteConfig?.tags || ["😼", ":D"];
-    } catch (error) {
-      console.error("Error loading site config:", error);
-    }
-  }</script>
+
+  </script>
 
 
 
@@ -114,7 +119,7 @@
     <!-- Eyebrow label -->
     <p class="flex items-center gap-[0.6rem] text-[0.78rem]  uppercase text-white mb-[1.4rem]">
       <span class="inline-block w-[6px] h-[6px] rounded-full bg-blue-400 shrink-0"></span>
-        {eyebrowText}
+        {$eyebrowText}
     </p>
  
 
@@ -132,12 +137,12 @@
 
     <!-- Sub-headline -->
     <p class="text-[clamp(0.95rem,1.5vw,1.15rem)] leading-[1.7] text-gray-400 opacity-50 mb-8 flex flex-wrap w-100">
-        {subHeadlineText}
+        {$subHeadlineText}
     </p>
  
     <!-- Skill tags -->
     <div class="flex flex-wrap gap-2 mb-[2.4rem]">
-      {#each tags as tag}
+      {#each $tags as tag}
         <span class="text-3xl tracking-[0.05em] px-[0.85rem] py-[0.3rem] rounded-full
                      border border-[#5b8bff]/30 text-[#5b8bff]/85 bg-[#5b8bff]/[0.06]">
           {tag}

@@ -1,21 +1,19 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import FadeIn from "./fadeIn.svelte";
-    import SlideIn from "./slideIn.svelte";
     import TiltCard from "./tiltCard.svelte";
-    import { fetchEducations, fetchSiteConfig, fetchPhotos, getImageUrl, type Education, type SiteConfig } from "./api";
+    import { fetchEducations, fetchPhotos, getImageUrl, type Education, type SiteConfig } from "./api";
+    import { bio } from "./configvariables";
     import SlideLoader from "./SlideLoader.svelte";
 
     let education: Education[] = [];
-    let siteConfig: SiteConfig | null = null;
     let photos: string[] = [];
     let loading = true;
 
     onMount(async () => {
         try {
-            const [fetchedEducation, fetchedConfig, fetchedPhotos] = await Promise.all([
+            const [fetchedEducation, fetchedPhotos] = await Promise.all([
                 fetchEducations(),
-                fetchSiteConfig(),
                 fetchPhotos()
             ]);
 
@@ -28,7 +26,6 @@
             );
 
             education = educationWithUrls;
-            siteConfig = fetchedConfig;
             photos = fetchedPhotos;
           
         } catch (error) {
@@ -37,8 +34,6 @@
             loading = false;
         }
     });
-
-    $: Bio = siteConfig?.bio || "I'm a Computer Science + Math student at Rutgers University, interested in Software Engineering and AI. When I'm not working, you can find me building side projects, exploring new technologies, or refining ideas into something real."
 </script>
 
 <section id="about" class="">
@@ -55,7 +50,7 @@
   <!-- Bio -->
   <div class="max-w-3xl mx-auto mb-4 text-center">
     <p class=" font-serif text-gray-400 text-base md:text-lg leading-relaxed">
-   {Bio}
+   {$bio}
     </p>
   </div>
 
