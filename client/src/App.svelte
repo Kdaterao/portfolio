@@ -9,6 +9,8 @@
 </script>
 
 <svelte:window bind:scrollY={y}/>
+
+<div class="w-full  h-full overflow-hidden">
 <div class="bg-stone-950">
   <NavInitial />
   <Nav />
@@ -20,6 +22,7 @@
     rootMargin="100px"
   />
 
+  
   <!-- Lazy load Projects section -->
   <LazyLoad
     component={() => import('./lib/projects.svelte')}
@@ -37,4 +40,7 @@
     component={() => import('./lib/bottom.svelte')}
     rootMargin="100px"
   />
+</div>
+
+
 </div>
