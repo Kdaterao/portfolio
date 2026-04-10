@@ -92,15 +92,13 @@
         </button>
       {/each}
     </div>
+
     
-    <!-- Where auto scroll area -->
-    <div  on:wheel|nonpassive={handleWheel} 
-    class="block md:hidden absolute z-12  justify-center  mt-12 w-full h-2/4 outline-2 outline-red-900">
-    </div>
-   
+
    <!-- Cards -->
     <div
       bind:this={container}
+      on:wheel|nonpassive={handleWheel}
       class="flex flex-row  justify-start md:justify-center gap-6
             overflow-x-auto md:flex-wrap
             [&::-webkit-scrollbar]:w-2

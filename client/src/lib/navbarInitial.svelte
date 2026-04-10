@@ -20,7 +20,7 @@
 
 
   <!-- Nav bar -->
-  <div class="hidden sm:block">
+  <div class="w-full  h-full overflow-hidden">
     <nav class="relative z-[10] flex justify-center 
             justify-between 
             gap-4 px-4 sm:px-6 md:px-12 py-4
