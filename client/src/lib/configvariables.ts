@@ -15,7 +15,7 @@ async function getStoreValue<T>(store: any): Promise<T> {
   return value!;
 }
 
-
+/*
 // Text inputs
 export const newTextID = writable("");
 export const newContent = writable("");
@@ -25,6 +25,7 @@ export const textIDs = writable<string[]>([]);
 
 // File inputs
 export const newFileID = writable("");
+*/
 
 
 export const fullText = writable("");
@@ -35,6 +36,7 @@ export const linkedin = writable("");
 export const github = writable("");
 export const resume = writable("");
 export const tags = writable<string[]>([]);
+
 
 
 

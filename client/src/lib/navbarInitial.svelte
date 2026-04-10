@@ -10,7 +10,7 @@
   function scroll(section: string){
     const element = document.getElementById(section);
     element?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-    console.log("done!");
+     //console.log("done!");
   }
 
 </script>
@@ -25,7 +25,7 @@
  
       <span class="text-lg tracking font-bold text-white mr-auto cursor-pointer hidden sm:block">KD</span>
 
-    <ul class=" hidden sm:flex  sm:block gap-3 lg:gap-8 list-none mt-2">
+    <ul class=" hidden sm:flex  sm:block  gap-3 lg:gap-8 list-none mt-2">
       {#each links as { label, section}}
         <li>
           <button
@@ -33,6 +33,8 @@
                             no-underline transition-colors duration-200 hover:text-white hidden  md:block ">
             {label}
           </button>
+
+          
         </li>
       {/each}
     </ul>

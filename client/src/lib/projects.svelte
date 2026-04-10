@@ -2,12 +2,13 @@
   import { onMount } from "svelte";
   import FadeIn from "./fadeIn.svelte";
   import SlideIn from "./slideIn.svelte";
-  import { fetchProjects, getImageUrl, type Project } from "./api";
+  import { fetchProjects, getImageUrl, type Project } from "./api"; 
+  import { LazyLoad }  from "./LazyLoad"
 
-  let projects: Project[] = [];
-
+  let self: HTMLElement;
+  let projectsWithUrls: Project[] = [];
+  let Projects: Project[] = [];
   //----- allow focus on scroll element automatically ------
-  let loading = true;
   
     let container: HTMLDivElement;
     const handleWheel = (e: WheelEvent) => {
@@ -21,13 +22,16 @@
     };
 
   //------ get data -----
+
+
   onMount(async () => {
     try {
-      const fetchedProjects = await fetchProjects();
+      Projects = await LazyLoad<Project[]>(fetchProjects, self );
+
 
       // Convert image keys to signed URLs
-      const projectsWithUrls = await Promise.all(
-        fetchedProjects.map(async (project) => ({
+      projectsWithUrls = await Promise.all(
+        Projects.map(async (project) => ({
           ...project,
           tech: typeof (project as any).tech === 'string' ? (project as any).tech.split(',').map((t: string) => t.trim()) : project.tech || [],
           tags: typeof (project as any).tags === 'string' ? (project as any).tags.split(',').map((t: string) => t.trim()) : project.tags || [],
@@ -35,19 +39,16 @@
         }))
       );
 
-      projects = projectsWithUrls;
     } catch (error) {
       console.error("Error loading projects:", error);
-    } finally {
-      loading = false;
-    }
+    } 
 
 
   });
 
   //----- filter (tabs) -----
-  $: features = projects.filter((p) => p.featured); //list of featured cards
-  $: rest = projects.filter((p) => !p.featured); // the rest..
+  $: features = projectsWithUrls.filter((p) => p.featured); //list of featured cards
+  $: rest = projectsWithUrls.filter((p) => !p.featured); // the rest..
 
   //----- get all unique tags(for tab) -----
   $: allTabs = ['All', 'Featured', ...new Set(rest.flatMap((p) => p.tags))]; 
@@ -65,7 +66,7 @@
 
 
 
-<section id="projects" class="py-24  px-6">
+<section bind:this={self} id="projects" class="py-24  px-6">
   <FadeIn>
     <div class="flex flex-col flex-wrap items-center mb-12">
         <p class="text-sm uppercase tracking-widest text-gray-400 mb-2">What I've Built</p>
@@ -74,7 +75,7 @@
     </div>
   </FadeIn>
 
-  {#if projects.length}
+  {#if projectsWithUrls.length}
 
 
     <!-- Tabs -->

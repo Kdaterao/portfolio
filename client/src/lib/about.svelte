@@ -2,41 +2,41 @@
     import { onMount } from "svelte";
     import FadeIn from "./fadeIn.svelte";
     import TiltCard from "./tiltCard.svelte";
-    import { fetchEducations, fetchPhotos, getImageUrl, type Education, type SiteConfig } from "./api";
+    import { fetchEducations, fetchPhotos, getImageUrl, type Education} from "./api";
     import { bio } from "./configvariables";
     import SlideLoader from "./SlideLoader.svelte";
+    import { LazyLoad } from "./LazyLoad"
+    
+    let Educations: Education[] = [];
+    let educationWithUrls: Education[] = [];
+    let fetchedPhotos: string[] = [];
 
-    let education: Education[] = [];
-    let photos: string[] = [];
-    let loading = true;
+    let self: HTMLElement;
 
     onMount(async () => {
         try {
-            const [fetchedEducation, fetchedPhotos] = await Promise.all([
-                fetchEducations(),
-                fetchPhotos()
-            ]);
+
+            Educations = await LazyLoad<Education[]>(fetchEducations, self)
+            fetchedPhotos = await LazyLoad<string[]>(fetchPhotos, self);
+
+     
 
             // Convert logo keys to signed URLs for education
-            const educationWithUrls = await Promise.all(
-                fetchedEducation.map(async (edu) => ({
+             educationWithUrls = await Promise.all(
+                Educations.map(async (edu) => ({
                     ...edu,
                     logo: edu.logo ? await getImageUrl(edu.logo) : ""
                 }))
             );
 
-            education = educationWithUrls;
-            photos = fetchedPhotos;
-          
+
         } catch (error) {
             console.error("Error loading about data:", error);
-        } finally {
-            loading = false;
-        }
+        } 
     });
 </script>
 
-<section id="about" class="">
+<section bind:this={self} id="about" class="">
   <FadeIn>
     <div class="flex flex-col items-center mb-16">
       <p class="text-sm uppercase tracking-widest text-gray-400 mb-2">An introduction</p>
@@ -56,7 +56,7 @@
 
   <!-- Photo gallery: horizontal row -->
   <div class=" flex  flex-wrap gap-5 justify-center">
-    {#each photos as photo, i}
+    {#each fetchedPhotos as photo, i}
       <SlideLoader delay={i*200}>
         <TiltCard>
           <div class="overflow-hidden rounded-2xl aspect-[4/5] bg-white/[0.03] border border-white/[0.08]
@@ -76,12 +76,12 @@
     <!-- Education card -->
     <FadeIn delay={100}>
     <div class="flex flex-row justify-center  flex-wrap ">
-      <div class="gap-4">
-        {#each education as edu}
+      <div class="">
+        {#each educationWithUrls as edu}
           <div class="relative rounded-2xl border border-white/[0.15] bg-white/[0.03] p-3 sm:p-8 flex flex-col gap-6
                        transition-all duration-300 hover:border-blue-400 hover:shadow-xl  hover:translate-y-2 cursor-pointer
                        backglow 
-                       min-h-70  w-full max-w-120 m-2 ">
+                       min-h-70  w-full max-w-90 sm:max-w-120 m-2 ">
 
             <!-- Header -->
             <div class="flex items-center gap-5">

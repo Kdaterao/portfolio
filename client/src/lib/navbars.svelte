@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { fullText, eyebrowText, subHeadlineText, bio, linkedin, github, resume, tags } from "./configvariables";
-  import { type SiteConfig , fetchSiteConfig} from "./api"
-  import { onMount } from "svelte";
+  import {  linkedin, github, resume} from "./configvariables";
   let y: number;
   let threshold = 150;
 
@@ -15,7 +13,7 @@
   function scroll(section: string){
     const element = document.getElementById(section);
     element?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-    console.log("done!");
+    //console.log("done!");
   }
 
 

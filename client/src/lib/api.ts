@@ -1,7 +1,9 @@
-// API utilities for connecting to the backend server
-const API_BASE = import.meta.env.VITE_MONGO_API_BASE;
-const API_R2 = import.meta.env.VITE_R2_API_BASE;
-// Types for our data
+//----- imports -----
+
+import { writable } from "svelte/store";
+
+
+//----- data types ------
 export interface Project {
   textID: string;
   title: string;
@@ -58,8 +60,41 @@ export interface Image {
   featured?: boolean;
 }
 
+//----- store variables ------
+
+//helper function to get store value as promise
+export async function getStoreValue<T>(store: any): Promise<T> {
+  let value: T;
+  store.subscribe((v: T) => value = v)(); // immediately unsubscribe
+  return value!;
+}
 
 
+//
+export const Projects = writable<Project[]>([]);
+export const Experiences = writable<Experience[]>([]);
+export const Educations = writable<Education[]>([]);
+export const Photos = writable<string[]>([]);
+
+
+// Config variables
+export const fullText = writable("");
+export const eyebrowText = writable("");
+export const subHeadlineText = writable("");
+export const bio = writable("");
+export const linkedin = writable("");
+export const github = writable("");
+export const resume = writable("");
+export const tags = writable<string[]>([]);
+
+
+
+//----- fetch functions ------
+// API utilities for connecting to the backend server
+const API_BASE = import.meta.env.VITE_MONGO_API_BASE;
+const API_R2 = import.meta.env.VITE_R2_API_BASE;
+
+//headers
 const defaultHeaders = {
   'x-api-key': import.meta.env.VITE_API_KEY || '',
   'Content-Type': 'application/json',

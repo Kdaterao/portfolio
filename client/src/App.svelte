@@ -1,11 +1,15 @@
 <script lang="ts">
+  import Bottom from './lib/bottom.svelte'
+  import About from './lib/about.svelte'
+  import Experience from './lib/experience.svelte'
+  import Projects from './lib/projects.svelte'
   import { fullText, eyebrowText, subHeadlineText, bio, linkedin, github, resume, tags } from "./lib/configvariables";
   import { onMount } from "svelte";
   import { type SiteConfig , fetchSiteConfig} from "./lib/api"
   import Hero from "./lib/hero.svelte"
   import NavInitial from "./lib/navbarInitial.svelte"
   import Nav from './lib/navbars.svelte';
-  import LazyLoad from './lib/LazyLoad.svelte';
+
 
   let y = 0;
   let navbarcutoff = 200;
@@ -37,34 +41,27 @@
 
 <div class="w-full  h-full overflow-hidden">
 <div class="bg-stone-950">
-  <NavInitial />
   <Nav />
+  <NavInitial />
+
+
   <Hero />
 
   <!-- Lazy load About/Education section -->
-  <LazyLoad
-    component={() => import('./lib/about.svelte')}
-    rootMargin="100px"
-  />
+   <About></About>
 
   
   <!-- Lazy load Projects section -->
-  <LazyLoad
-    component={() => import('./lib/projects.svelte')}
-    rootMargin="100px"
-  />
+   <Projects></Projects>
 
   <!-- Lazy load Experience section -->
-  <LazyLoad
-    component={() => import('./lib/experience.svelte')}
-    rootMargin="100px"
-  />
+   <Experience></Experience>
+
 
   <!-- Lazy load Bottom section -->
-  <LazyLoad
-    component={() => import('./lib/bottom.svelte')}
-    rootMargin="100px"
-  />
+
+  <Bottom></Bottom>
+
 </div>
 
 

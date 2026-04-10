@@ -2,34 +2,34 @@
     import { onMount } from "svelte";
     import FadeIn from "./fadeIn.svelte";
     import SlideIn from "./slideIn.svelte";
-    import { fetchExperiences, getImageUrl, type Experience } from "./api";
+    import { fetchExperiences, getImageUrl, type Experience} from "./api";
+    import { LazyLoad } from "./LazyLoad"
 
-    let experiences: Experience[] = [];
-    let loading = true;
-
+    let experiencesWithUrls: Experience[] = [];
+    let self: HTMLElement;
+    let Experiences : Experience[] = [];
     onMount(async () => {
         try {
-            const fetchedExperiences = await fetchExperiences();
+
+            Experiences = await LazyLoad<Experience[]>(fetchExperiences, self );
+
 
             // Convert logo keys to signed URLs
-            const experiencesWithUrls = await Promise.all(
-                fetchedExperiences.map(async (experience) => ({
+            experiencesWithUrls = await Promise.all(
+                Experiences.map(async (experience) => ({
                     ...experience,
                     tech: typeof (experience as any).tech === 'string' ? (experience as any).tech.split(',').map((t: string) => t.trim()) : experience.tech || [],
                     logo: experience.logo ? await getImageUrl(experience.logo) : ""
                 }))
             );
 
-            experiences = experiencesWithUrls;
         } catch (error) {
             console.error("Error loading experiences:", error);
-        } finally {
-            loading = false;
-        }
+        } 
     });
 </script>
 
-<section id="experience" class="">
+<section bind:this={self} id="experience" class="">
   <FadeIn>
     <div class="flex flex-col items-center mb-16">
         <p class="text-sm uppercase tracking-widest text-gray-400 mb-2">Where I've Worked</p>
@@ -48,7 +48,7 @@
 
     <!-- Cards (on the right)-->
     <div class="flex flex-col gap-16">
-      {#each experiences as exp, i}
+      {#each experiencesWithUrls as exp, i}
 
         <!-- Mobile layout -->
         <div class="flex md:hidden gap-6 pl-2">
