@@ -69,7 +69,7 @@
   <FadeIn>
     <div class="flex flex-col flex-wrap items-center mb-12">
         <p class="text-sm uppercase tracking-widest text-gray-400 mb-2">What I've Built</p>
-        <h1 class="text-white text-[3.3rem] md:text-[4.0rem] font-bold flex  ">Featured Projects</h1>
+        <h1 class="text-white text-[3.3rem] md:text-[4.0rem] font-bold flex  ">Projects</h1>
 
     </div>
   </FadeIn>

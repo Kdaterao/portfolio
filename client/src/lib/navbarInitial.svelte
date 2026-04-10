@@ -47,7 +47,7 @@
       Resume
     </a>
     <a href={github} target="_blank" rel="noopener"
-       class="hidden sm:block text-[0.75rem] tracking-[0.06em] uppercase text-[#f0efe9]
+       class="text-[0.75rem] tracking-[0.06em] uppercase text-[#f0efe9]
               border border-white/25 px-4 py-[0.4rem] rounded-full no-underline
               transition-all duration-200 hover:bg-white/[0.08] hover:border-white/45">
       GitHub
