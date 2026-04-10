@@ -38,6 +38,7 @@ export const selectedFilePreview = writable<string | null>(null);
 export const API_MONGO = import.meta.env.VITE_API_MONGO;
 export const API_R2 = import.meta.env.VITE_API_R2;
 
+
 export const defaultHeaders = {
   'x-api-key': import.meta.env.VITE_API_KEY || '',
   'Content-Type': 'application/json',

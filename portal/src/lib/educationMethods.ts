@@ -64,7 +64,7 @@ export async function createEducation() {
     const formData = new FormData();
     formData.append("file", logoFile);
 
-    const r2Res = await fetch(`${API_R2}/upload/file`, { method: "POST", body: formData });
+    const r2Res = await fetch(`${API_R2}/upload/file`, {headers:  defaultHeaders, method: "POST", body: formData });
     const r2Data = await r2Res.json();
     if (!r2Data.key) return alert("Failed to upload file to R2");
 
@@ -85,7 +85,7 @@ export async function createEducation() {
 
     const mongoRes = await fetch(`${API_MONGO}/add/education`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: defaultHeaders ,
       body: JSON.stringify(payload)
     });
 
@@ -105,7 +105,7 @@ export async function createEducation() {
 
 export async function listEducations() {
     try {
-        const res = await fetch(`${API_MONGO}/list/educations`);
+        const res = await fetch(`${API_MONGO}/list/educations`, {headers:  defaultHeaders});
         const data = await res.json();
 
         console.log("Fetched educations:", data);
@@ -120,7 +120,7 @@ export async function previewEducation() {
     const educationTextIDVal = await getStoreValue<string>(selectedEducation);
     if (!educationTextIDVal) return alert("Select an education to preview");
     try{
-    const resMongo = await fetch(`${API_MONGO}/get/education?id=${educationTextIDVal}`);
+    const resMongo = await fetch(`${API_MONGO}/get/education?id=${educationTextIDVal}`,  {headers:  defaultHeaders});
     if (!resMongo.ok) return alert("Could not find education in MongoDB");
     const dataMongo = await resMongo.json();
 
@@ -134,7 +134,7 @@ export async function previewEducation() {
     gpa.set(dataMongo.gpa);
     current.set(dataMongo.current);
 
-    const resR2 = await fetch(`${API_R2}/get/file?key=${dataMongo.logo}`, { method: "GET" });
+    const resR2 = await fetch(`${API_R2}/get/file?key=${dataMongo.logo}`, { headers:  defaultHeaders, method: "GET" });
     const dataR2 = await resR2.json();
 
     if (dataR2.url) {
@@ -156,14 +156,14 @@ export async function deleteEducation() {
 
     try {
         //get r2ID(logo) from mongodb
-        const getRes = await fetch(`${API_MONGO}/get/education?id=${id}`);
+        const getRes = await fetch(`${API_MONGO}/get/education?id=${id}`, { headers:  defaultHeaders });
         if (!getRes.ok) return alert("Could not find file in MongoDB");
         const imageDoc = await getRes.json();
         const r2Key = imageDoc.logo;
 
         //delete from r2buck and mongodb
-        await fetch(`${API_R2}/delete/file?key=${r2Key}`, { method: "DELETE" });
-        await fetch(`${API_MONGO}/delete/education?id=${id}`, { method: "DELETE" });
+        await fetch(`${API_R2}/delete/file?key=${r2Key}`, {headers:  defaultHeaders, method: "DELETE" });
+        await fetch(`${API_MONGO}/delete/education?id=${id}`, {headers:  defaultHeaders, method: "DELETE" });
 
         //update store
         await listEducations(); //update our id list
@@ -201,17 +201,17 @@ export async function updateEducation() {
             const formData = new FormData();
             formData.append("file", logoFile);
 
-            const r2Res = await fetch(`${API_R2}/upload/file`, { method: "POST", body: formData });
+            const r2Res = await fetch(`${API_R2}/upload/file`, {headers:  defaultHeaders, method: "POST", body: formData });
             const r2Data = await r2Res.json();
             if (!r2Data.key) return alert("Failed to upload file to R2");
             logoKey = r2Data.key;
 
             // Optionally delete old logo
-            const getRes = await fetch(`${API_MONGO}/get/education?id=${id}`);
+            const getRes = await fetch(`${API_MONGO}/get/education?id=${id}`, { headers:  defaultHeaders });
             if (getRes.ok) {
                 const oldDoc = await getRes.json();
                 if (oldDoc.logo) {
-                    await fetch(`${API_R2}/delete/file?key=${oldDoc.logo}`, { method: "DELETE" });
+                    await fetch(`${API_R2}/delete/file?key=${oldDoc.logo}`, { headers:  defaultHeaders, method: "DELETE" });
                 }
             }
         }
@@ -235,9 +235,10 @@ export async function updateEducation() {
 
         const mongoRes = await fetch(`${API_MONGO}/update/education?id=${id}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers:  defaultHeaders,
             body: JSON.stringify(payload)
         });
+
 
         if (mongoRes.ok) {
             alert("Education updated!");

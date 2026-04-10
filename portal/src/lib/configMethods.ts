@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 import { getStoreValue } from "./methods";
-import { API_MONGO } from "./variables";
+import { API_MONGO , defaultHeaders} from "./variables";
 
 export const fullText = writable("");
 export const eyebrowText = writable("");
@@ -24,7 +24,7 @@ async function clearForm() {
 
 export async function loadConfig() {
     try {
-        const res = await fetch(`${API_MONGO}/get/config`);
+        const res = await fetch(`${API_MONGO}/get/config`, { headers: defaultHeaders });
         const data = await res.json();
 
         console.log("Fetched config:", data);
@@ -66,7 +66,7 @@ export async function updateConfig() {
 
     const res = await fetch(`${API_MONGO}/update/config`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers:  defaultHeaders,
       body: JSON.stringify(payload)
     });
 

@@ -24,7 +24,7 @@ export async function getStoreValue<T>(store: any): Promise<T> {
 
 export async function fetchTextIDs() {
   try {
-
+    console.log(defaultHeaders);
     //fetch
     const res = await fetch(`${API_MONGO}/list/text`, { headers: defaultHeaders });
     const data = await res.json();

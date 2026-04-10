@@ -184,8 +184,6 @@
                      border border-gray-500 px-4 py-2 rounded-full no-underline
 
                      transition-all duration-200 hover:text-white hover:border-white/25
-
-                     hidden md:block
                      "
             >
               Live demo
@@ -201,7 +199,7 @@
 
                      transition-all duration-200 hover:text-white hover:border-white/25
 
-                     hidden md:block
+  
                      " 
             >
               GitHub
