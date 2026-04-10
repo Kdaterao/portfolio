@@ -1,8 +1,8 @@
 <script lang="ts">
 
-  const resume = "https://drive.google.com/file/d/1os2i3lNXyaYk1BFNxFW34SFMe1hXd_Sh/view?usp=sharing";
-  const linkedin = "https://www.linkedin.com/in/krishdaterao/"
-  const github = "https://github.com/Kdaterao?tab=repositories";
+  const resume = "";
+  const linkedin = ""
+  const github = "";
 
   const links = [
     { label: "About", section: "about"},
