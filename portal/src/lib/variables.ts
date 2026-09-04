@@ -37,9 +37,14 @@ export const selectedFilePreview = writable<string | null>(null);
 
 export const API_MONGO = import.meta.env.VITE_API_MONGO;
 export const API_R2 = import.meta.env.VITE_API_R2;
+export const API_SERVER = import.meta.env.VITE_API || String(import.meta.env.VITE_API_MONGO || '').replace(/\/mongo\/?$/, '');
 
 
 export const defaultHeaders = {
   'x-api-key': import.meta.env.VITE_API_KEY || '',
   'Content-Type': 'application/json',
+};
+
+export const fileHeaders = {
+  'x-api-key': import.meta.env.VITE_API_KEY || '',
 };

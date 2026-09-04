@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 import { getStoreValue } from "./methods";
-import { API_MONGO, API_R2, dragActive, defaultHeaders} from "./variables";
+import { API_MONGO, API_R2, dragActive, defaultHeaders, fileHeaders} from "./variables";
 
 export const educationTextID = writable("");
 export const school = writable("");
@@ -63,8 +63,10 @@ export async function createEducation() {
     // Upload to R2
     const formData = new FormData();
     formData.append("file", logoFile);
-
-    const r2Res = await fetch(`${API_R2}/upload/file`, {headers:  defaultHeaders, method: "POST", body: formData });
+    
+    console.log("logoFile:", logoFile);
+    
+    const r2Res = await fetch(`${API_R2}/upload/file`, {headers:  fileHeaders, method: "POST", body: formData });
     const r2Data = await r2Res.json();
     if (!r2Data.key) return alert("Failed to upload file to R2");
 
@@ -201,7 +203,7 @@ export async function updateEducation() {
             const formData = new FormData();
             formData.append("file", logoFile);
 
-            const r2Res = await fetch(`${API_R2}/upload/file`, {headers:  defaultHeaders, method: "POST", body: formData });
+            const r2Res = await fetch(`${API_R2}/upload/file`, {headers:  fileHeaders, method: "POST", body: formData });
             const r2Data = await r2Res.json();
             if (!r2Data.key) return alert("Failed to upload file to R2");
             logoKey = r2Data.key;

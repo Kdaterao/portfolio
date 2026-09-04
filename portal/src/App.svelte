@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import {fetchTextIDs, fetchFileIDs} from "./lib/methods";
 
+    import Login from "./lib/login.svelte";
     import RawText from "./lib/rawText.svelte";
     import RawFiles from "./lib/rawFiles.svelte";
     import Experience from "./lib/experience.svelte";
@@ -9,6 +10,7 @@
     import Projects from "./lib/projects.svelte";
     import Config from "./lib/config.svelte";
 
+    let loggedIn = localStorage.getItem('portal-auth') === '1';
     let activeTab = 'text'; // Default to text tab
 
     const tabs = [
@@ -20,17 +22,33 @@
         { id: 'config', label: 'Site Config', component: Config }
     ];
 
+  function logout() {
+    localStorage.removeItem('portal-auth');
+    window.location.reload();
+  }
+
   // Fetch existing IDs when mounted to DOM
   onMount(async () => {
+    if (!loggedIn) return;
     await fetchTextIDs();
     await fetchFileIDs();
   });
 </script>
 
-
+{#if !loggedIn}
+  <Login />
+{:else}
 <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-6">
 
   <div class="max-w-6xl mx-auto">
+    <div class="flex justify-end mb-2">
+      <button
+        class="px-4 py-2 rounded-lg text-sm bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white"
+        on:click={logout}
+      >
+        Logout
+      </button>
+    </div>
     <h1 class="text-4xl font-bold text-center mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Admin Portal</h1>
     <p class="text-center text-gray-400 mb-8">made with only the finest AI slop ui</p>
 
@@ -57,3 +75,4 @@
   </div>
 
 </div>
+{/if}

@@ -1,7 +1,7 @@
 import { 
   newTextID, newContent, textIDs, selectedTextID, selectedContent, 
   file, newFileID, fileIDs, selectedFileID, dragActive, selectedFilePreview,
-  API_MONGO, API_R2, defaultHeaders
+  API_MONGO, API_R2, defaultHeaders, fileHeaders
 } from "./variables";
 
 
@@ -26,7 +26,7 @@ export async function fetchTextIDs() {
   try {
     console.log(defaultHeaders);
     //fetch
-    const res = await fetch(`${API_MONGO}/list/text`, { headers: defaultHeaders });
+    const res = await fetch(`${API_MONGO}/list/texts`, { headers: defaultHeaders });
     const data = await res.json();
 
     //update store
@@ -49,7 +49,7 @@ export async function addText() {
   if (ids.includes(id)) return alert("Text ID already exists!");
 
   //add to mongodb 
-  const res = await fetch(`${API_MONGO}/add/texts`, {
+  const res = await fetch(`${API_MONGO}/add/text`, {
     method: "POST",
     headers: defaultHeaders,
     body: JSON.stringify({ textID: id, text: content })
@@ -150,7 +150,7 @@ export async function uploadFile() {
     formData.append("folder", key);
 
     //upload file to r2
-    const r2Res = await fetch(`${API_R2}/upload/file`, {headers: defaultHeaders,  method: "POST", body: formData });
+    const r2Res = await fetch(`${API_R2}/upload/file`, {headers: fileHeaders,  method: "POST", body: formData });
     const r2Data = await r2Res.json();
     if (!r2Data.key) return alert("Failed to upload file to R2");
 
