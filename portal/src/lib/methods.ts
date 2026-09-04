@@ -1,5 +1,4 @@
 import { 
-  newTextID, newContent, textIDs, selectedTextID, selectedContent, 
   file, newFileID, fileIDs, selectedFileID, dragActive, selectedFilePreview,
   API_MONGO, API_R2, defaultHeaders, fileHeaders
 } from "./variables";
@@ -15,95 +14,6 @@ export async function getStoreValue<T>(store: any): Promise<T> {
   store.subscribe((v: T) => value = v)(); // immediately unsubscribe
   return value!;
 }
-
-
-//====================================
-//           Text Methods 
-//====================================
-
-
-export async function fetchTextIDs() {
-  try {
-    console.log(defaultHeaders);
-    //fetch
-    const res = await fetch(`${API_MONGO}/list/texts`, { headers: defaultHeaders });
-    const data = await res.json();
-
-    //update store
-    textIDs.set(data.texts?.map((t: any) => t.textID) || []);
-  } catch (err) {
-    console.error("Error fetching text IDs:", err);
-  }
-}
-
-
-
-export async function addText() {
-  //get store values
-  const id = await getStoreValue<string>(newTextID);
-  const content = await getStoreValue<string>(newContent);
-  const ids = await getStoreValue<string[]>(textIDs);
-
-  //error handling
-  if (!id || !content) return alert("Text ID and content are required");
-  if (ids.includes(id)) return alert("Text ID already exists!");
-
-  //add to mongodb 
-  const res = await fetch(`${API_MONGO}/add/text`, {
-    method: "POST",
-    headers: defaultHeaders,
-    body: JSON.stringify({ textID: id, text: content })
-  });
-
-  
-  console.log(await res.json());
-
-  //update store
-  newTextID.set("");
-  newContent.set("");
-  await fetchTextIDs();
-}
-
-
-
-export async function updateText() {
-  //get store varaibles
-  const id = await getStoreValue<string>(selectedTextID);
-  const content = await getStoreValue<string>(selectedContent);
-
-  if (!id) return alert("Select a Text ID to update");
-
-  //update text
-  const res = await fetch(`${API_MONGO}/update/text?id=${id}`, {
-    method: "PUT",
-    headers: defaultHeaders,
-    body: JSON.stringify({ text: content })
-  });
-  console.log(await res.json());
-  await fetchTextIDs();
-}
-
-
-
-
-export async function deleteText() {
-
-  //get store varaibles
-  const id = await getStoreValue<string>(selectedTextID);
-
-  //error handling
-  if (!id) return alert("Select a Text ID to delete");
-  
-  //delete mongodb object
-  const res = await fetch(`${API_MONGO}/delete/text?id=${id}`, { headers: defaultHeaders, method: "DELETE" });
-  console.log(await res.json());
-
-  //update store
-  selectedTextID.set("");
-  selectedContent.set("");
-  await fetchTextIDs();
-}
-
 
 
 //====================================

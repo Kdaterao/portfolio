@@ -3,7 +3,6 @@ import { writable } from "svelte/store";
 
 /*
 import {
-  newTextID, newContent, selectedTextID, selectedContent,textIDs,
   newFileID, file, selectedFileID, dragActive, fileIDs, API_MONGO,API_R2
 } from "./variables";
 */
@@ -18,13 +17,6 @@ async function getStoreValue<T>(store: any): Promise<T> {
   return value!;
 }
 
-
-// Text inputs
-export const newTextID = writable("");
-export const newContent = writable("");
-export const selectedTextID = writable("");
-export const selectedContent = writable("");
-export const textIDs = writable<string[]>([]);
 
 // File inputs
 export const newFileID = writable("");

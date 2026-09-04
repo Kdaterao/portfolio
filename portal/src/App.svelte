@@ -1,9 +1,8 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import {fetchTextIDs, fetchFileIDs} from "./lib/methods";
+    import {fetchFileIDs} from "./lib/methods";
 
     import Login from "./lib/login.svelte";
-    import RawText from "./lib/rawText.svelte";
     import RawFiles from "./lib/rawFiles.svelte";
     import Experience from "./lib/experience.svelte";
     import Education from "./lib/education.svelte";
@@ -11,11 +10,10 @@
     import Config from "./lib/config.svelte";
 
     let loggedIn = localStorage.getItem('portal-auth') === '1';
-    let activeTab = 'text'; // Default to text tab
+    let activeTab = 'files';
 
     const tabs = [
-        { id: 'text', label: 'Text Content', component: RawText },
-        { id: 'files', label: 'File Upload', component: RawFiles },
+        { id: 'files', label: 'Gallery', component: RawFiles },
         { id: 'experience', label: 'Experience', component: Experience },
         { id: 'education', label: 'Education', component: Education },
         { id: 'projects', label: 'Projects', component: Projects },
@@ -30,7 +28,6 @@
   // Fetch existing IDs when mounted to DOM
   onMount(async () => {
     if (!loggedIn) return;
-    await fetchTextIDs();
     await fetchFileIDs();
   });
 </script>
